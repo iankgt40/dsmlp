@@ -14,7 +14,7 @@ LABEL maintainer="UC San Diego ITS/ETS <ets-consult@ucsd.edu>"
 USER root
 
 RUN apt-get -y install htop
-RUN apt-get -y install tcsh bison bc xorg-dev libz-dev libbz2-dev
+#RUN apt-get -y install tcsh bison bc xorg-dev libz-dev libbz2-dev
 RUN apt-get -y install openmpi-bin libopenmpi-dev
 
 # 3) install packages using notebook user
