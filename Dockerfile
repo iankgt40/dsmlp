@@ -26,49 +26,8 @@ RUN apt-get update -y && \
 #RUN apt-get -y install openmpi-bin libopenmpi-dev
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# 3) install packages using notebook user
-USER ikaufman
-#USER bmduggan
-
-# CUDA 11 
-# tf requirements: https://www.tensorflow.org/install/pip#linux
-RUN mamba install \
-  cudatoolkit=11.8 \
-  nccl \
-  -y && \
-  fix-permissions $CONDA_DIR && \
-  fix-permissions /home/$NB_USER && \
-  mamba clean -a -y
-
-RUN mamba install -c "nvidia/label/cuda-11.8.0" cuda-nvcc -y && \
-  fix-permissions $CONDA_DIR && \
-  fix-permissions /home/$NB_USER && \
-  mamba clean -a -y
-
-# install protobuf to avoid weird base type error. seems like if we don't then it'll be installed twice.
-# https://github.com/spesmilo/electrum/issues/7825
-# pip cache purge didnt work here for some reason.
-RUN pip install --no-cache-dir protobuf==3.20.3
-
-# RUN conda install -y scikit-learn
-
-RUN pip install --no-cache-dir networkx scipy
-RUN pip install datascience \
-    PyQt5 \
-    scapy \
-    nltk \
-    opencv-contrib-python-headless \
-    opencv-python \
-    pycocotools \
-    pillow \
-    nvidia-cudnn-cu11==8.6.0.163 \
-    fix-permissions $CONDA_DIR && \ 
-    fix-permissions /home/$NB_USER && \
-    pip cache purge
-    # no purge required but no-cache-dir is used. pip purge will actually break the build here!
-
-    USER $NB_UID:$NB_GID
-ENV PATH=${PATH}:/usr/local/nvidia/bin:/opt/conda/bin
+ #   USER $NB_UID:$NB_GID
+#ENV PATH=${PATH}:/usr/local/nvidia/bin:/opt/conda/bin
 
 #ENV CUDNN_PATH=/opt/conda/lib/python3.9/site-packages/nvidia/cudnn
 
@@ -79,10 +38,10 @@ ENV PATH=${PATH}:/usr/local/nvidia/bin:/opt/conda/bin
 
 # Do some CONDA/CUDA stuff
 # Copy libdevice file to the required path
-RUN mkdir -p $CONDA_DIR/lib/nvvm/libdevice && \
-  cp $CONDA_DIR/lib/libdevice.10.bc $CONDA_DIR/lib/nvvm/libdevice/
+#RUN mkdir -p $CONDA_DIR/lib/nvvm/libdevice && \
+ # cp $CONDA_DIR/lib/libdevice.10.bc $CONDA_DIR/lib/nvvm/libdevice/
 
-RUN . /tmp/activate.sh
+#RUN . /tmp/activate.sh
 
 # Override command to disable running jupyter notebook at launch
 # CMD ["/bin/bash"]
