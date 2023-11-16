@@ -5,7 +5,7 @@
 # See https://github.com/ucsd-ets/datahub-docker-stack/wiki/Stable-Tag 
 # for a list of the most current containers we maintain
 ARG BASE_TAG=latest
-FROM ghcr.io/ucsd-ets/datascience-notebook:$BASE_TAG
+FROM  ghcr.io/ucsd-ets/datascience-notebook:2023.4-stable
 
 LABEL maintainer="UC San Diego Research IT Services Ian Kaufman <ikaufman@ucsd.edu>"
 
