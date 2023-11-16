@@ -4,8 +4,10 @@
 # base notebook, contains Jupyter and relevant tools
 # See https://github.com/ucsd-ets/datahub-docker-stack/wiki/Stable-Tag 
 # for a list of the most current containers we maintain
-ARG BASE_TAG=latest
-FROM  ghcr.io/ucsd-ets/datascience-notebook:2023.4-stable
+#ARG BASE_TAG=latest
+#FROM  ghcr.io/ucsd-ets/datascience-notebook:2023.4-stable
+ARG PYTHON_VERSION=python-3.9.5
+FROM jupyter/datascience-notebook:$PYTHON_VERSION
 
 LABEL maintainer="UC San Diego Research IT Services Ian Kaufman <ikaufman@ucsd.edu>"
 
@@ -15,6 +17,33 @@ USER root
 ARG LIBNVINFER=7.2.2 LIBNVINFER_MAJOR_VERSION=7 CUDA_VERSION=11.8
 
 RUN apt-get update && apt-get install -y htop
+ENV DEBIAN_FRONTEND noninteractive
+ENV DEBCONF_NOWARNINGS="yes"
+
+RUN apt-get update -y && \
+    apt-get -qq install -y --no-install-recommends \
+    git \
+    curl \
+    rsync \
+    unzip \
+    less \
+    nano \
+    vim \
+    cmake \
+    tmux \
+    screen \
+    gnupg \
+    htop \
+    wget \
+    openssh-client \
+    openssh-server \
+    p7zip \
+    apt-utils \
+    jq \
+    build-essential \
+    p7zip-full && \
+    chmod g-s /usr/bin/screen && \
+    chmod 1777 /var/run/screen
 RUN apt-get install -y tcsh bison bc xorg-dev libz-dev libbz2-dev flex
 #RUN apt-get -y install openmpi-bin libopenmpi-dev
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
