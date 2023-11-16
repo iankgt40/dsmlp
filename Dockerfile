@@ -6,8 +6,9 @@
 # for a list of the most current containers we maintain
 #ARG BASE_TAG=latest
 #FROM  ghcr.io/ucsd-ets/datascience-notebook:2023.4-stable
-ARG PYTHON_VERSION=python-3.9.5
-FROM jupyter/datascience-notebook:$PYTHON_VERSION
+#ARG PYTHON_VERSION=python-3.9.5
+#FROM jupyter/datascience-notebook:$PYTHON_VERSION
+FROM  ghcr.io/ucsd-ets/scipy-ml-notebook:2023.4-stable
 
 LABEL maintainer="UC San Diego Research IT Services Ian Kaufman <ikaufman@ucsd.edu>"
 
@@ -21,40 +22,9 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NOWARNINGS="yes"
 
 RUN apt-get update -y && \
-    apt-get -qq install -y --no-install-recommends \
-    git \
-    curl \
-    rsync \
-    unzip \
-    less \
-    nano \
-    vim \
-    cmake \
-    tmux \
-    screen \
-    gnupg \
-    htop \
-    wget \
-    openssh-client \
-    openssh-server \
-    p7zip \
-    apt-utils \
-    jq \
-    build-essential \
-    p7zip-full && \
-    chmod g-s /usr/bin/screen && \
-    chmod 1777 /var/run/screen
-RUN apt-get install -y tcsh bison bc xorg-dev libz-dev libbz2-dev flex
+    apt-get install -y tcsh bison bc xorg-dev libz-dev libbz2-dev flex
 #RUN apt-get -y install openmpi-bin libopenmpi-dev
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-COPY run_jupyter.sh /
-RUN chmod +x /run_jupyter.sh
-
-COPY cudatoolkit_env_vars.sh cudnn_env_vars.sh /etc/datahub-profile.d/
-#COPY activate.sh /tmp/activate.sh
-
-RUN chmod 777 /etc/datahub-profile.d/*.sh #/tmp/activate.sh
 
 # 3) install packages using notebook user
 USER ikaufman
