@@ -4,7 +4,7 @@
 # base notebook, contains Jupyter and relevant tools
 # See https://github.com/ucsd-ets/datahub-docker-stack/wiki/Stable-Tag 
 # for a list of the most current containers we maintain
-ARG BASE_CONTAINER=ghcr.io/ucsd-ets/datascience-notebook:stable
+ARG BASE_CONTAINER=ghcr.io/ucsd-ets/scipy-ml-notebook:stable
 
 FROM $BASE_CONTAINER
 
@@ -14,6 +14,8 @@ LABEL maintainer="UC San Diego ITS/ETS <ets-consult@ucsd.edu>"
 USER root
 
 RUN apt-get -y install htop
+RUN apt-get -y install flex tcsh bison bc xorg-dev libz-dev libbz2-dev
+RUN apt-get -y openmpi-bin libopenmpi-dev
 
 # 3) install packages using notebook user
 USER jovyan
