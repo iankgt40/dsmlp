@@ -13,7 +13,7 @@ LABEL maintainer="UC San Diego Research IT Services Ian Kaufman <ikaufman@ucsd.e
 USER root
 
 RUN apt-get update && apt-get install -y htop
-RUN apt-get install -y tcsh bison bc xorg-dev libz-dev libbz2-dev
+RUN apt-get install -y tcsh bison bc xorg-dev libz-dev libbz2-dev flex
 #RUN apt-get -y install openmpi-bin libopenmpi-dev
 
 # 3) install packages using notebook user
