@@ -4,17 +4,16 @@
 # base notebook, contains Jupyter and relevant tools
 # See https://github.com/ucsd-ets/datahub-docker-stack/wiki/Stable-Tag 
 # for a list of the most current containers we maintain
-ARG BASE_CONTAINER=ghcr.io/ucsd-ets/scipy-ml-notebook:stable
+ARG BASE_TAG=latest
+FROM ghcr.io/ucsd-ets/datascience-notebook:$BASE_TAG
 
-FROM $BASE_CONTAINER
-
-LABEL maintainer="UC San Diego ITS/ETS <ets-consult@ucsd.edu>"
+LABEL maintainer="UC San Diego Research IT Services Ian Kaufman <ikaufman@ucsd.edu>"
 
 # 2) change to root to install packages
 USER root
 
-RUN apt-get -y install htop
-#RUN apt-get -y install tcsh bison bc xorg-dev libz-dev libbz2-dev
+RUN apt-get update && apt-get install -y htop
+RUN apt-get install -y tcsh bison bc xorg-dev libz-dev libbz2-dev
 #RUN apt-get -y install openmpi-bin libopenmpi-dev
 
 # 3) install packages using notebook user
