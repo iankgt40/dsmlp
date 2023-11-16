@@ -12,6 +12,8 @@ LABEL maintainer="UC San Diego Research IT Services Ian Kaufman <ikaufman@ucsd.e
 # 2) change to root to install packages
 USER root
 
+ARG LIBNVINFER=7.2.2 LIBNVINFER_MAJOR_VERSION=7 CUDA_VERSION=11.8
+
 RUN apt-get update && apt-get install -y htop
 RUN apt-get install -y tcsh bison bc xorg-dev libz-dev libbz2-dev flex
 #RUN apt-get -y install openmpi-bin libopenmpi-dev
@@ -21,9 +23,9 @@ COPY run_jupyter.sh /
 RUN chmod +x /run_jupyter.sh
 
 COPY cudatoolkit_env_vars.sh cudnn_env_vars.sh /etc/datahub-profile.d/
-COPY activate.sh /tmp/activate.sh
+#COPY activate.sh /tmp/activate.sh
 
-RUN chmod 777 /etc/datahub-profile.d/*.sh /tmp/activate.sh
+RUN chmod 777 /etc/datahub-profile.d/*.sh #/tmp/activate.sh
 
 # 3) install packages using notebook user
 USER ikaufman
