@@ -17,7 +17,10 @@ RUN apt-get install -y tcsh bison bc xorg-dev libz-dev libbz2-dev flex
 #RUN apt-get -y install openmpi-bin libopenmpi-dev
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-COPY cudatoolkit_env_vars.sh cudnn_env_vars.sh tensorrt_env_vars.sh /etc/datahub-profile.d/
+COPY run_jupyter.sh /
+RUN chmod +x /run_jupyter.sh
+
+COPY cudatoolkit_env_vars.sh cudnn_env_vars.sh /etc/datahub-profile.d/
 COPY activate.sh /tmp/activate.sh
 
 RUN chmod 777 /etc/datahub-profile.d/*.sh /tmp/activate.sh
