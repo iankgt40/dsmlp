@@ -22,7 +22,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NOWARNINGS="yes"
 
 RUN apt-get update -y && \
-    apt-get install -y tcsh bison bc xorg-dev libz-dev libbz2-dev flex openmpi-bin libopenmpi-dev
+    apt-get install -y tcsh bison bc xorg-dev libz-dev libbz2-dev flex openmpi-bin libopenmpi-dev nvidia-cuda-toolkit
     
 #RUN apt-get -y install openmpi-bin libopenmpi-dev
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
