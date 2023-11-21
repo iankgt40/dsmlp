@@ -8,8 +8,8 @@
 #FROM  ghcr.io/ucsd-ets/datascience-notebook:2023.4-stable
 ARG PYTHON_VERSION=python-3.9.5
 #FROM jupyter/datascience-notebook:$PYTHON_VERSION
-#FROM  ghcr.io/ucsd-ets/scipy-ml-notebook:2023.4-stable
-FROM jupyter/base-notebook:$PYTHON_VERSION
+FROM  ghcr.io/ucsd-ets/scipy-ml-notebook:2023.4-stable
+#FROM jupyter/base-notebook:$PYTHON_VERSION
 
 LABEL maintainer="UC San Diego Research IT Services Ian Kaufman <ikaufman@ucsd.edu>"
 
@@ -23,31 +23,8 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NOWARNINGS="yes"
 
 RUN apt-get update -y && \
-    apt-get -qq install -y --no-install-recommends \
-    git \
-    curl \
-    rsync \
-    unzip \
-    less \
-    nano \
-    vim \
-    cmake \
-    tmux \
-    screen \
-    gnupg \
-    htop \
-    wget \
-    openssh-client \
-    openssh-server \
-    p7zip \
-    apt-utils \
-    jq \
-    p7zip-full \
-    build-essential \
     tcsh bison bc xorg-dev libz-dev libbz2-dev flex openmpi-bin libopenmpi-dev \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    chmod g-s /usr/bin/screen && \
-    chmod 1777 /var/run/screen
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
     #apt-get install -y tcsh bison bc xorg-dev libz-dev libbz2-dev flex openmpi-bin libopenmpi-dev
     #apt-get install -y tcsh bison bc xorg-dev libz-dev libbz2-dev flex openmpi-bin libopenmpi-dev nvidia-cuda-toolkit
 
@@ -63,10 +40,6 @@ RUN echo '/usr/local/cuda/targets/x86_64-linux/lib' >> /etc/ld.so.conf.d/000_cud
     ldconfig 
 
 ENV CUDA_HOME=/usr/local/cuda
-    
-    
-#RUN apt-get -y install openmpi-bin libopenmpi-dev
-#RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
  #   USER $NB_UID:$NB_GID
 #ENV PATH=${PATH}:/usr/local/nvidia/bin:/opt/conda/bin
