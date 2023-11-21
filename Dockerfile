@@ -27,8 +27,8 @@ RUN apt-get update -y && \
 #RUN apt-get -y install openmpi-bin libopenmpi-dev
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 
-sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 
 
  #   USER $NB_UID:$NB_GID
 ENV PATH=${PATH}:/usr/local/nvidia/bin:/opt/conda/bin
